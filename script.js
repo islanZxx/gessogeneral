@@ -54,6 +54,48 @@ function verificar() {
     }
 }
 
+// Contador animado
+function animarContador(el) {
+    var alvo = parseInt(el.getAttribute('data-alvo'));
+    var prefixo = el.getAttribute('data-prefixo');
+    var sufixo = el.getAttribute('data-sufixo');
+    var duracao = 2000;
+    var inicio = null;
+
+    function passo(timestamp) {
+        if (!inicio) inicio = timestamp;
+        var progresso = timestamp - inicio;
+        var atual = Math.min(Math.floor((progresso / duracao) * alvo), alvo);
+        el.textContent = prefixo + atual + sufixo;
+        if (atual < alvo) {
+            requestAnimationFrame(passo);
+        }
+    }
+
+    requestAnimationFrame(passo);
+}
+
+var contadores = document.querySelectorAll('.contador-numero');
+var contadorAtivado = false;
+
+function verificarContador() {
+    if (contadorAtivado) return;
+    contadores.forEach(function(el) {
+        var topo = el.getBoundingClientRect().top;
+        if (topo < window.innerHeight - 60) {
+            contadorAtivado = true;
+            contadores.forEach(function(c) {
+                animarContador(c);
+            });
+        }
+    });
+}
+
+window.addEventListener('scroll', verificarContador);
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(verificarContador, 200);
+});
+
 window.addEventListener('scroll', verificar);
 window.addEventListener('resize', verificar);
 document.addEventListener('DOMContentLoaded', function() {
