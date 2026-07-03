@@ -82,7 +82,7 @@ function verificarContador() {
     if (contadorAtivado) return;
     contadores.forEach(function(el) {
         var topo = el.getBoundingClientRect().top;
-        if (topo < window.innerHeight - 60) {
+        if (topo < window.innerHeight) {
             contadorAtivado = true;
             contadores.forEach(function(c) {
                 animarContador(c);
@@ -92,12 +92,10 @@ function verificarContador() {
 }
 
 window.addEventListener('scroll', verificarContador);
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(verificarContador, 200);
-});
-
+window.addEventListener('load', verificarContador);
 window.addEventListener('scroll', verificar);
 window.addEventListener('resize', verificar);
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(verificar, 200);
+    setTimeout(verificarContador, 100);
 });
