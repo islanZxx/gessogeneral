@@ -1,19 +1,43 @@
 // Menu hamburguer
-const btn = document.querySelector('.hamburguer');
-const menu = document.querySelector('.menu');
+var btn = document.querySelector('.hamburguer');
+var menu = document.querySelector('.menu');
 
-btn.addEventListener('click', () => {
-    const aberto = btn.getAttribute('aria-expanded') === 'true';
+btn.addEventListener('click', function() {
+    var aberto = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', !aberto);
     btn.classList.toggle('ativo');
     menu.classList.toggle('aberto');
 });
 
-menu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+menu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
         btn.setAttribute('aria-expanded', 'false');
         btn.classList.remove('ativo');
         menu.classList.remove('aberto');
+    });
+});
+
+// Scroll suave para links internos
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        var alvo = document.querySelector(this.getAttribute('href'));
+        if (alvo) {
+            e.preventDefault();
+            alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Efeito de toque nos cards (mobile)
+document.querySelectorAll('.card, .card-diferencial').forEach(function(card) {
+    card.addEventListener('touchstart', function() {
+        this.classList.add('tocado');
+    });
+    card.addEventListener('touchend', function() {
+        var el = this;
+        setTimeout(function() {
+            el.classList.remove('tocado');
+        }, 300);
     });
 });
 
@@ -31,6 +55,7 @@ function verificar() {
 }
 
 window.addEventListener('scroll', verificar);
-document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(verificar, 100);
+window.addEventListener('resize', verificar);
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(verificar, 200);
 });
