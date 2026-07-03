@@ -28,7 +28,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(link) {
     });
 });
 
-// Efeito de toque nos cards (mobile)
+// Efeito de toque nos cards
 document.querySelectorAll('.card, .card-diferencial').forEach(function(card) {
     card.addEventListener('touchstart', function() {
         this.classList.add('tocado');
@@ -40,19 +40,6 @@ document.querySelectorAll('.card, .card-diferencial').forEach(function(card) {
         }, 300);
     });
 });
-
-// Animacao de scroll
-function verificar() {
-    var elementos = document.querySelectorAll('.animar');
-    var altura = window.innerHeight;
-
-    for (var i = 0; i < elementos.length; i++) {
-        var topo = elementos[i].getBoundingClientRect().top;
-        if (topo < altura - 60) {
-            elementos[i].classList.add('visivel');
-        }
-    }
-}
 
 // Contador animado
 function animarContador(el) {
@@ -91,10 +78,26 @@ function verificarContador() {
     });
 }
 
-window.addEventListener('scroll', verificarContador);
-window.addEventListener('load', verificarContador);
+// Animacao de scroll
+function verificar() {
+    var elementos = document.querySelectorAll('.animar');
+    var altura = window.innerHeight;
+
+    for (var i = 0; i < elementos.length; i++) {
+        var topo = elementos[i].getBoundingClientRect().top;
+        if (topo < altura - 60) {
+            elementos[i].classList.add('visivel');
+        }
+    }
+}
+
 window.addEventListener('scroll', verificar);
+window.addEventListener('scroll', verificarContador);
 window.addEventListener('resize', verificar);
+window.addEventListener('load', function() {
+    verificar();
+    verificarContador();
+});
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(verificar, 200);
     setTimeout(verificarContador, 100);
