@@ -236,6 +236,44 @@ section h2 {
 }
 
 /* =====================
+   CONTADOR
+===================== */
+
+.contador {
+    background: var(--azul);
+    padding: 60px 0;
+}
+
+.contador-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+}
+
+.contador-item {
+    color: white;
+}
+
+.contador-numero {
+    display: block;
+    font-family: 'Barlow Condensed', Arial, sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--laranja);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.contador-item p {
+    font-size: 15px;
+    color: rgba(255,255,255,.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* =====================
    DIFERENCIAIS
 ===================== */
 
@@ -400,56 +438,6 @@ footer {
     }
 }
 
-
-/* =====================
-   CONTADOR
-===================== */
-
-.contador {
-    background: var(--azul);
-    padding: 60px 0;
-}
-
-.contador-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    text-align: center;
-}
-
-.contador-item {
-    color: white;
-}
-
-.contador-numero {
-    display: block;
-    font-family: 'Barlow Condensed', Arial, sans-serif;
-    font-size: 56px;
-    font-weight: 800;
-    color: var(--laranja);
-    line-height: 1;
-    margin-bottom: 8px;
-}
-
-.contador-item p {
-    font-size: 15px;
-    color: rgba(255,255,255,.8);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-
-@media (max-width: 768px) {
-    .contador-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
-
-    .contador-numero {
-        font-size: 44px;
-    }
-}
-
 /* =====================
    HAMBURGUER
 ===================== */
@@ -558,6 +546,15 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .contador-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    .contador-numero {
+        font-size: 44px;
+    }
+
     .whatsapp span {
         display: none;
     }
@@ -566,4 +563,4 @@ footer {
         padding: 14px;
         border-radius: 50%;
     }
-        }
+}
