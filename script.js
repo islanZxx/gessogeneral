@@ -5,6 +5,7 @@
 const btn = document.querySelector(".hamburguer");
 const menu = document.querySelector(".menu");
 const nav = document.querySelector("nav");
+const header = document.querySelector("header");
 
 const cards = document.querySelectorAll(".card, .card-diferencial");
 const links = document.querySelectorAll('a[href^="#"]');
@@ -164,6 +165,24 @@ function verificarAnimacoes() {
     });
 
 }
+
+
+/* ==================================================
+   HEADER AO ROLAR
+================================================== */
+
+function verificarHeader() {
+
+    if (window.scrollY > 10) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+
+}
+
+window.addEventListener("scroll", verificarHeader);
+window.addEventListener("load", verificarHeader);
 
 
 /* ==================================================
