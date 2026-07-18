@@ -1,209 +1,56 @@
-/* ==================================================
-   ELEMENTOS
-================================================== */
+const menuToggle = document.getElementById("menuToggle");
+const navbar = document.getElementById("navbar");
+const navLinks = document.querySelectorAll(".nav-link");
 
-const btn = document.querySelector(".hamburguer");
-const menu = document.querySelector(".menu");
-const nav = document.querySelector("nav");
-const header = document.querySelector("header");
+if (menuToggle && navbar) {
 
-const cards = document.querySelectorAll(".card, .card-diferencial");
-const links = document.querySelectorAll('a[href^="#"]');
-const contadores = document.querySelectorAll(".contador-numero");
-const elementosAnimados = document.querySelectorAll(".animar");
+    menuToggle.addEventListener("click", () => {
 
-/* ==================================================
-   MENU MOBILE
-================================================== */
+        const isOpen = navbar.classList.toggle("active");
 
-function alternarMenu() {
+        menuToggle.classList.toggle("active");
 
-    const aberto = btn.getAttribute("aria-expanded") === "true";
+        document.body.classList.toggle("menu-open", isOpen);
 
-    btn.setAttribute("aria-expanded", !aberto);
-
-    btn.classList.toggle("ativo");
-    menu.classList.toggle("aberto");
-    nav.classList.toggle("aberto");
-
-}
-
-btn.addEventListener("click", alternarMenu);
-
-menu.querySelectorAll("a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        btn.setAttribute("aria-expanded", "false");
-
-        btn.classList.remove("ativo");
-        menu.classList.remove("aberto");
-        nav.classList.remove("aberto");
+        menuToggle.setAttribute("aria-expanded", isOpen);
 
     });
 
-});
+    navLinks.forEach(link => {
 
+        link.addEventListener("click", () => {
 
-/* ==================================================
-   SCROLL SUAVE
-================================================== */
+            navbar.classList.remove("active");
+            menuToggle.classList.remove("active");
 
-links.forEach(link => {
+            document.body.classList.remove("menu-open");
 
-    link.addEventListener("click", e => {
+            menuToggle.setAttribute("aria-expanded", "false");
 
-        const alvo = document.querySelector(link.getAttribute("href"));
-
-        if (!alvo) return;
-
-        e.preventDefault();
-
-        alvo.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
         });
 
     });
 
-});
+    document.addEventListener("click", (event) => {
 
+        const clickedMenu = navbar.contains(event.target);
+        const clickedButton = menuToggle.contains(event.target);
 
-/* ==================================================
-   EFEITO DOS CARDS
-================================================== */
+        if (
+            navbar.classList.contains("active") &&
+            !clickedMenu &&
+            !clickedButton
+        ) {
 
-cards.forEach(card => {
+            navbar.classList.remove("active");
+            menuToggle.classList.remove("active");
 
-    card.addEventListener("pointerdown", () => {
-        card.classList.add("tocado");
-    });
+            document.body.classList.remove("menu-open");
 
-    card.addEventListener("pointerup", () => {
-
-        setTimeout(() => {
-            card.classList.remove("tocado");
-        }, 300);
-
-    });
-
-});
-
-
-/* ==================================================
-   CONTADOR
-================================================== */
-
-let contadorAtivado = false;
-
-function animarContador(elemento) {
-
-    const alvo = Number(elemento.dataset.alvo);
-    const prefixo = elemento.dataset.prefixo;
-    const sufixo = elemento.dataset.sufixo;
-
-    const duracao = 2000;
-
-    let inicio = null;
-
-    function atualizar(timestamp) {
-
-        if (!inicio) inicio = timestamp;
-
-        const progresso = timestamp - inicio;
-
-        const valor = Math.min(
-            Math.floor((progresso / duracao) * alvo),
-            alvo
-        );
-
-        elemento.textContent = `${prefixo}${valor}${sufixo}`;
-
-        if (valor < alvo) {
-            requestAnimationFrame(atualizar);
-        }
-
-    }
-
-    requestAnimationFrame(atualizar);
-
-}
-
-function verificarContador() {
-
-    if (contadorAtivado) return;
-
-    contadores.forEach(contador => {
-
-        if (contador.getBoundingClientRect().top < window.innerHeight) {
-
-            contadorAtivado = true;
-
-            contadores.forEach(animarContador);
+            menuToggle.setAttribute("aria-expanded", "false");
 
         }
 
     });
 
 }
-
-
-/* ==================================================
-   ANIMAÇÕES
-================================================== */
-
-function verificarAnimacoes() {
-
-    elementosAnimados.forEach(elemento => {
-
-        if (elemento.getBoundingClientRect().top < window.innerHeight - 60) {
-
-            elemento.classList.add("visivel");
-
-        }
-
-    });
-
-}
-
-
-/* ==================================================
-   HEADER AO ROLAR
-================================================== */
-
-function verificarHeader() {
-
-    if (window.scrollY > 10) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-
-}
-
-window.addEventListener("scroll", verificarHeader);
-window.addEventListener("load", verificarHeader);
-
-
-/* ==================================================
-   EVENTOS
-================================================== */
-
-window.addEventListener("scroll", verificarAnimacoes);
-window.addEventListener("scroll", verificarContador);
-
-window.addEventListener("resize", verificarAnimacoes);
-
-window.addEventListener("load", () => {
-
-    verificarAnimacoes();
-    verificarContador();
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    setTimeout(verificarAnimacoes, 200);
-    setTimeout(verificarContador, 100);
-
-});
